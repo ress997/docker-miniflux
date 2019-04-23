@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+  db:
+    image: postgres:11-alpine
+    restart: always
+    environment:
+      - TZ=Japan
+      - POSTGRES_USER=miniflux
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - back
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  app:
+    image: miniflux/miniflux:2
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - TZ=Japan
+      - DATABASE_URL=postgres://miniflux:postgres@db/miniflux?sslmode=disable
+    env_file: .env
+    networks:
+      - front
+      - back
+    ports:
+      - "127.0.0.1:8585:8080"
+
+networks:
+  front:
+  back:
+    internal: true
