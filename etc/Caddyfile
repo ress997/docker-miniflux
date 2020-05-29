@@ -1,9 +1,0 @@
-feed.example.com {
-	gzip
-
-	tls ssl@example.com
-
-	proxy / localhost:8585 {
-		transparent
-	}
-}

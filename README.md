@@ -3,6 +3,5 @@
 
 ## Install
 1. `cp .env.sample .env`
-1. `docker-compose run --rm app /usr/local/bin/miniflux -migrate`
-1. `docker-compose run --rm app /usr/local/bin/miniflux -create-admin`
+1. `docker-compose run --rm app miniflux -create-admin`
 1. `docker-compose up -d`

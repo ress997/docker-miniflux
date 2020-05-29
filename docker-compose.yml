@@ -2,10 +2,9 @@ version: '3'
 services:
 
   db:
-    image: postgres:11-alpine
+    image: postgres:12-alpine
     restart: always
     environment:
-      - TZ=Japan
       - POSTGRES_USER=miniflux
       - POSTGRES_PASSWORD=postgres
     networks:
@@ -16,13 +15,13 @@ services:
       - ./postgres:/var/lib/postgresql/data
 
   app:
-    image: miniflux/miniflux:2
+    image: miniflux/miniflux:latest
     restart: always
     depends_on:
       - db
     environment:
-      - TZ=Japan
       - DATABASE_URL=postgres://miniflux:postgres@db/miniflux?sslmode=disable
+      - RUN_MIGRATIONS=1
     env_file: .env
     networks:
       - front
